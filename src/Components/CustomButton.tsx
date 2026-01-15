@@ -62,7 +62,7 @@ const CustomButton = ({
           )}
           <SubTitleText
             textColor={buttonTextColor ? buttonTextColor: appColors.white}
-            fontWeight="700"
+            fontFamily="Bold"
           >
             {buttonText}
           </SubTitleText>

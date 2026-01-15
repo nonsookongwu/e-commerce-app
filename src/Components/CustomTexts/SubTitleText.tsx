@@ -11,20 +11,21 @@ interface Props {
   handleOnPress?: () => void;
   textDecoration?: "underline" | "line-through";
   textAlign?: "left" | "right" | "center";
-  fontFamily?: FontFamily
+  fontFamily?: FontFamily;
+  lineHeight?: number;
 }
 
 const SubTitleText = ({
   textColor,
   children,
   fontWeight,
-  handleOnPress, textDecoration, textAlign, fontFamily="Regular"
+  handleOnPress, textDecoration, textAlign, fontFamily="Regular", lineHeight
 }: Props) => {
   return (
     <Text
       style={[
         styles.Text,
-        { color: textColor, fontWeight, textDecorationLine: textDecoration, textAlign, fontFamily: AppFont[fontFamily] },
+        { color: textColor, fontWeight, textDecorationLine: textDecoration, textAlign, fontFamily: AppFont[fontFamily], lineHeight },
       ]}
       onPress={handleOnPress}
     >

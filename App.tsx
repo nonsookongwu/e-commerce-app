@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthStackNavigator from "./src/navigation/AuthStack";
 import MainStackNavigator from "./src/navigation/MainStack";
 import { useFonts } from "expo-font";
+import CheckoutScreen from "./src/screens/cart/CheckoutScreen";
 
 export default function App() {
 
@@ -28,6 +29,7 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <MainStackNavigator />
+            {/* <CheckoutScreen /> */}
           </NavigationContainer>
         </SafeAreaProvider>
       </>

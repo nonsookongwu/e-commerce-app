@@ -6,13 +6,9 @@ import { formatAmount } from '../utils/helperFunctions';
 import SmallText from './CustomTexts/SmallText';
 import CartButton from './CartButton';
 import { commonStyles } from '../utils/constants';
+import { Product } from '../utils/typesAndInterfaces';
 
-interface Product {
-  imageURL: string;
-  title: string;
-  price: number;
-  id: number;
-}
+
 
 interface Props {
   product: Product;

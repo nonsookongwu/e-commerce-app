@@ -9,7 +9,13 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { IS_Android } from "../utils/constants";
 
-const Tab = createBottomTabNavigator();
+export type BottomTabParams = {
+  home: undefined;
+  cart: undefined;
+  profile: undefined;
+};
+
+const Tab = createBottomTabNavigator<BottomTabParams>();
 
 function HomeTabs() {
   return (
@@ -50,7 +56,7 @@ function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="profile"
         component={ProfileScreen}
         options={{
           title: "Profile",

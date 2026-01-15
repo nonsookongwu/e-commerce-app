@@ -38,8 +38,8 @@ const LoginScreen = () => {
   return (
     <CustomSafeAreaView>
       <View style={styles.container}>
-        <Image style={styles.image} source={images.appLogo} />
         <CustomFormWrapper>
+        <Image style={styles.image} source={images.appLogo} />
           <CustomInput
             placeHolder="Email"
             keyboardType="email-address"
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     height: vs(150),
     width: s(150),
     resizeMode: "cover",
+    alignSelf: "center"
   },
   buttonContainer: {
     gap: vs(35),

@@ -11,6 +11,7 @@ const CustomFormWrapper = ({ children }: PropsWithChildren) => {
         width: "100%",
         paddingHorizontal: s(5),
         paddingVertical: vs(5),
+        flex: 1
       }}
       enableOnAndroid
       keyboardShouldPersistTaps="handled"
