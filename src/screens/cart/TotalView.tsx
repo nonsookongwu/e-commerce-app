@@ -5,8 +5,11 @@ import { vs, s } from 'react-native-size-matters'
 import CustomButton from '../../Components/CustomButton'
 import SubTitleText from '../../Components/CustomTexts/SubTitleText'
 import { appColors } from '../../styles/colors'
+import { useNavigation } from '@react-navigation/native'
+import { CartNavigationProp } from '../../utils/typesAndInterfaces'
 
 const TotalView = () => {
+    const navigation = useNavigation<CartNavigationProp>();
      const paymentSummary = [
        { id: 1, label: "Order Total", value: "$1237.00" },
        { id: 2, label: "Taxes & Fees", value: "$60.00" },
@@ -29,7 +32,7 @@ const TotalView = () => {
                   <SubTitleText>$12345</SubTitleText>
                 </View>
               </View>
-              <CustomButton buttonText="Continue" bgColor={appColors.black} />
+              <CustomButton buttonText="Continue" buttonFn={()=> navigation.navigate("checkoutScreen")} bgColor={appColors.black} />
             </View>
   )
 }
@@ -41,7 +44,10 @@ const styles = StyleSheet.create({
     // height: vs(200),
     backgroundColor: appColors.white,
     paddingVertical: vs(10),
-    gap: vs(10),
+        gap: vs(10),
+        borderTopWidth: 1,
+        borderTopColor: appColors.lightGray,
+    paddingHorizontal: s(12)
   },
   totalRowContainer: {
     gap: vs(10),

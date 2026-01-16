@@ -13,8 +13,8 @@ const Stack = createStackNavigator<MainStackParams>();
 function MainStackNavigator() {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false}}>
-        <Stack.Screen name="auth" component={AuthStackNavigator} />
         <Stack.Screen name="homeTabs" component={HomeTabs} />
+        <Stack.Screen name="auth" component={AuthStackNavigator} />
       </Stack.Navigator>
     );
 }

@@ -29,8 +29,8 @@ const CartScreen = () => {
             paddingTop: vs(10),
           }}
         />
-        <TotalView/>
       </View>
+        <TotalView/>
     </CustomSafeAreaView>
   );
 };

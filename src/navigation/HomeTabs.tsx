@@ -8,6 +8,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { IS_Android } from "../utils/constants";
+import CartStackNavigator from "./CartStack";
 
 export type BottomTabParams = {
   home: undefined;
@@ -24,8 +25,8 @@ function HomeTabs() {
         headerShown: false,
         tabBarActiveTintColor: appColors.primary,
         tabBarLabelStyle: { fontSize: s(12), marginTop: vs(4) },
-        tabBarStyle: IS_Android &&{
-          height: vs(60)
+        tabBarStyle: IS_Android && {
+          height: vs(60),
         },
         tabBarItemStyle: {
           // borderWidth: 1,
@@ -47,7 +48,8 @@ function HomeTabs() {
       />
       <Tab.Screen
         name="cart"
-        component={CartScreen}
+        component={CartStackNavigator}
+        // component={CartScreen}
         options={{
           title: "Cart",
           tabBarIcon: ({ color, size }) => (

@@ -25,3 +25,16 @@ export const signUpSchema = yup.object({
 });
 
 export type TSignUpSchema = yup.InferType<typeof signUpSchema>;
+
+
+export const CheckoutSchema = yup.object({
+  fullName: yup.string().required("Full name is required"),
+  phoneNumber: yup
+    .string()
+    .required("Phone number is required")
+    .min(11, "Phone number must be 11 digits")
+    .max(11, "Phone number must be 11 digits"),
+  address: yup.string().required("Address is required"),
+});
+
+export type TCheckoutSchema = yup.InferType<typeof CheckoutSchema>;
