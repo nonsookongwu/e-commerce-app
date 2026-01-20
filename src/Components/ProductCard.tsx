@@ -7,6 +7,9 @@ import SmallText from './CustomTexts/SmallText';
 import CartButton from './CartButton';
 import { commonStyles } from '../utils/constants';
 import { Product } from '../utils/typesAndInterfaces';
+import { useAppDispatch } from '../redux/store';
+import { addItemToCart } from '../redux/reducers/CardSlice';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -14,10 +17,15 @@ interface Props {
   product: Product;
 }
 
-const ProductCard = ({product}:Props) => {
+const ProductCard = ({ product }: Props) => {
+  const dispatch = useDispatch()
+  const handleAddToCart = () => {
+    dispatch(addItemToCart(product));
+  }
+
   return (
     <View style={styles.container}>
-      <CartButton />
+      <CartButton cartFn={handleAddToCart} />
       <Image
         style={styles.image}
         source={{

@@ -9,6 +9,8 @@ import AuthStackNavigator from "./src/navigation/AuthStack";
 import MainStackNavigator from "./src/navigation/MainStack";
 import { useFonts } from "expo-font";
 import CheckoutScreen from "./src/screens/cart/CheckoutScreen";
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
 
 export default function App() {
 
@@ -25,13 +27,15 @@ export default function App() {
   }
     return (
       <>
+        <Provider store={store}>
+
         <FlashMessage />
         <SafeAreaProvider>
           <NavigationContainer>
             <MainStackNavigator />
-            {/* <CheckoutScreen /> */}
           </NavigationContainer>
         </SafeAreaProvider>
+        </Provider>
       </>
     );
 }

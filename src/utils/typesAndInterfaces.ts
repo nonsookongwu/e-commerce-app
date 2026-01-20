@@ -18,4 +18,6 @@ export interface Product {
   title: string;
   price: number;
   id: number;
+  qty: number;
+  sum: number;
 }

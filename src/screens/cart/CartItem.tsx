@@ -1,5 +1,5 @@
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { s, vs } from 'react-native-size-matters'
 import { appColors } from '../../styles/colors'
 import SmallText from '../../Components/CustomTexts/SmallText'
@@ -7,22 +7,32 @@ import { formatAmount } from '../../utils/helperFunctions'
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { Product } from '../../utils/typesAndInterfaces'
+import { useDispatch } from 'react-redux'
+import { addItemCount, reduceItemCount, removeProductFromCart } from '../../redux/reducers/CardSlice'
 
 interface Props {
   product: Product;
 }
 
 const CartItem = ({ product }: Props) => {
-    const [productCount, setProductCount] = useState(1)
+  const dispatch = useDispatch()
+    // const [productCount, setProductCount] = useState(product.qty)
 
     const handleIncreaseProductCount = () => {
-        setProductCount(productCount + 1)
+      // setProductCount(productCount + 1)
+      dispatch(addItemCount(product));
     }
     const handleDecreaseProductCount = () => {
-        if (productCount === 1) return;
-        setProductCount(productCount - 1)
+        if (product.qty === 1) return;
+      // setProductCount(productCount - 1)
+      dispatch(reduceItemCount(product));
     }
-    
+ 
+
+  const handleDeleteItem = () => {
+   dispatch(removeProductFromCart(product))
+ }
+  
 
 
   return (
@@ -45,7 +55,7 @@ const CartItem = ({ product }: Props) => {
           >
             <Entypo name="plus" size={15} color="black" />
           </TouchableOpacity>
-          <SmallText>{productCount}</SmallText>
+          <SmallText>{product.qty}</SmallText>
           <TouchableOpacity
             style={styles.smallButtons}
             onPress={handleDecreaseProductCount}
@@ -56,7 +66,7 @@ const CartItem = ({ product }: Props) => {
       </View>
 
       <View style={styles.deleteContainer}>
-        <Pressable style={styles.deletePressable}>
+        <Pressable onPress={handleDeleteItem} style={styles.deletePressable}>
           <FontAwesome5 name="trash-alt" size={14} color="red" />
           <SmallText textColor={appColors.midGray} fontFamily="SemiBold">
             Delete

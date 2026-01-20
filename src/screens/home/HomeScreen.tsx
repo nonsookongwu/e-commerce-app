@@ -1,12 +1,10 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import { vs } from 'react-native-size-matters'
 import CustomSafeAreaView from '../../Components/CustomSafeAreaView'
 import HomeHeader from '../../Components/Headers/HomeHeader'
-import { AppFont } from '../../styles/font'
-import SubTitleText from '../../Components/CustomTexts/SubTitleText'
 import ProductCard from '../../Components/ProductCard'
 import { screenPaddingHorizontal } from '../../utils/constants'
-import { s, vs } from 'react-native-size-matters'
 import { products } from './data'
 
 const HomeScreen = () => {

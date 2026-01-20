@@ -14,3 +14,6 @@ export const commonStyles = StyleSheet.create({
             elevation: 4,
     }
 })
+
+export const Tax = 60
+export const ShippingFee = 10
