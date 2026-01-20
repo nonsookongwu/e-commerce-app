@@ -9,6 +9,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { IS_Android } from "../utils/constants";
 import CartStackNavigator from "./CartStack";
+import ProfileStackNavigator from "./ProfileStack";
 
 export type BottomTabParams = {
   home: undefined;
@@ -59,7 +60,7 @@ function HomeTabs() {
       />
       <Tab.Screen
         name="profile"
-        component={ProfileScreen}
+        component={ProfileStackNavigator}
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
