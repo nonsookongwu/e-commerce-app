@@ -11,9 +11,10 @@ import { useFonts } from "expo-font";
 import CheckoutScreen from "./src/screens/cart/CheckoutScreen";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function App() {
-
+const queryClient = new QueryClient()
   const [fontLoaded] = useFonts({
     "Nunito-Bold": require("./src/assets/fonts/Nunito-Bold.ttf"),
     "Nunito-Medium": require("./src/assets/fonts/Nunito-Medium.ttf"),
@@ -27,15 +28,16 @@ export default function App() {
   }
     return (
       <>
-        <Provider store={store}>
-
-        <FlashMessage />
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <MainStackNavigator />
-          </NavigationContainer>
-        </SafeAreaProvider>
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <FlashMessage />
+            <SafeAreaProvider>
+              <NavigationContainer>
+                <MainStackNavigator />
+              </NavigationContainer>
+            </SafeAreaProvider>
+          </Provider>
+        </QueryClientProvider>
       </>
     );
 }

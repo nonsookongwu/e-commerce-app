@@ -49,7 +49,7 @@ const CustomButton = ({
       disabled={isDisabled}
     >
       {loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator color={appColors.white} />
       ) : (
         <View style={styles.iconText}>
           {iconName && isValidFA5(iconName) ? (

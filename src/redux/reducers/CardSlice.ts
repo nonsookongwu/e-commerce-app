@@ -19,7 +19,7 @@ const CartSlice = createSlice({
       const existingItem = state.items.find(
         (item) => item.id === action.payload.id,
       );
-      if (existingItem) {
+      if (existingItem && existingItem.qty) {
         existingItem.qty += 1;
         existingItem.price += action.payload.price;
       } else {
@@ -36,9 +36,9 @@ const CartSlice = createSlice({
         (item) => item.id === action.payload.id,
       );
 
-      if (existingItem) {
+      if (existingItem && existingItem.qty) {
         existingItem.qty -= 1;
-        existingItem.price -= existingItem.sum;
+        existingItem.price -= existingItem.sum ? existingItem.sum : 0;
       }
     },
     addItemCount: (state, action: PayloadAction<Product>) => {
@@ -46,9 +46,9 @@ const CartSlice = createSlice({
         (item) => item.id === action.payload.id,
       );
 
-      if (existingItem) {
+      if (existingItem && existingItem.qty) {
         existingItem.qty += 1;
-        existingItem.price += existingItem.sum;
+        existingItem.price += existingItem.sum ? existingItem.sum : 0;
       }
     },
     //remove product from cart

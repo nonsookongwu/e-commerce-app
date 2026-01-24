@@ -5,12 +5,13 @@ import { appColors } from "../../styles/colors";
 import { s, vs } from "react-native-size-matters";
 import SubTitleText from "../../Components/CustomTexts/SubTitleText";
 import SmallText from "../../Components/CustomTexts/SmallText";
-import { formatAmount } from "../../utils/helperFunctions";
+import { formatAmount, formatDate } from "../../utils/helperFunctions";
+
 
 interface Props {
   totalPrice: number;
   price: number;
-  date: string;
+  date: number;
 }
 
 const OrderCard = ({ totalPrice, price, date }: Props) => {
@@ -29,10 +30,10 @@ const OrderCard = ({ totalPrice, price, date }: Props) => {
           </SmallText>
         </View>
         <View style={styles.bottomRow}>
-          <SmallText fontFamily="Medium">Date: {date}</SmallText>
-          <SmallText fontFamily="Medium" textColor="red">
-            {date}
-          </SmallText>
+          <SmallText fontFamily="Medium">Date: {formatDate(date)}</SmallText>
+          {/* <SmallText fontFamily="Medium" textColor="red">
+            {formatDate(date)}
+          </SmallText> */}
         </View>
       </View>
     </View>
@@ -64,5 +65,7 @@ const styles = StyleSheet.create({
   bottomRow: {
     justifyContent: "space-between",
     flexDirection: "row",
+    // borderWidth: 1,
+    // borderColor: "red"
   },
 });

@@ -3,24 +3,28 @@ import React from "react";
 import { screenPaddingHorizontal } from "../../utils/constants";
 import { vs } from "react-native-size-matters";
 import OrderCard from "./OrderCard";
+import useFetchUserOrders from "../../hooks/useFetchUserOrders";
 
 const OrderScreen = () => {
-  const orderList = [
-    { id: 1, totalPrice: 120.5, misc: 30, date: "2026-01-28" },
-    { id: 2, totalPrice: 75, misc: 15, date: "2026-01-29" },
-    { id: 3, totalPrice: 200.25, misc: 50, date: "2026-01-30" },
-  ];
+  const { data: orderList, isLoading, isFetching,   } = useFetchUserOrders();
+  // console.log(JSON.stringify(data, null, 3))
+  // const orderList = [
+  //   { id: 1, totalPrice: 120.5, misc: 30, date: "2026-01-28" },
+  //   { id: 2, totalPrice: 75, misc: 15, date: "2026-01-29" },
+  //   { id: 3, totalPrice: 200.25, misc: 50, date: "2026-01-30" },
+  // ];
   return (
     <View style={styles.container}>
       <FlatList
         data={orderList}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <OrderCard date={item.date} price={item.totalPrice} totalPrice={item.misc + item.totalPrice} />}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <OrderCard date={item.createdAt.seconds} price={item.totalPrice} totalPrice={item.totalProductsPricesSum} />}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: vs(30),
           gap: vs(15),
           paddingTop: vs(10),
+          
         }}
       />
     </View>

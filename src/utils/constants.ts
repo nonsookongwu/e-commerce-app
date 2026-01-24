@@ -17,3 +17,14 @@ export const commonStyles = StyleSheet.create({
 
 export const Tax = 60
 export const ShippingFee = 10
+
+export const FirebaseErrorCodes = {
+  "auth/email-already-exists": "email is already in use by an existing user",
+  "auth/email-already-in-use": "email is already in use by an existing user",
+  "auth/invalid-credential": "Invalid credential",
+  "auth/invalid-email": "Invalid email or password",
+    "auth/invalid-password": "Invalid email or password",
+    "auth/phone-number-already-exists": "Phone number is already in use",
+  "auth/user-not-found": "User does not exist",
+  "auth/weak-password": "Password is too weak"
+};

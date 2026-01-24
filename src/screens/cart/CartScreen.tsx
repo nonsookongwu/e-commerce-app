@@ -11,7 +11,7 @@ import TotalView from "./TotalView";
 
 const CartScreen = () => {
 
-  const cartItems = useAppSelector((state) => state.cartSlice.items);
+  const cartItems = useAppSelector((state) => state?.cartSlice.items);
 
   // console.log(cartItems)
 

@@ -11,21 +11,42 @@ import { Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckoutSchema, TCheckoutSchema } from "../../utils/validation";
 import CustomInput from "../../Components/CustomInput";
+import { useAppSelector } from "../../redux/store";
+import { usePlaceOrder } from "../../hooks/usePlaceOrder";
+import { showMessage } from "react-native-flash-message";
 
 const CheckoutScreen = () => {
-
-const {
-  control,
-  handleSubmit,
-  formState: { errors },
-} = useForm<TCheckoutSchema>({
-  resolver: yupResolver(CheckoutSchema) as Resolver<TCheckoutSchema>,
-});
+  const user = useAppSelector((state) => state.userDataSlice.user);
+  const items = useAppSelector((state) => state.cartSlice.items);
+  const totalOBJ = useAppSelector((state) => state.totalSlice.value);
+  console.log(JSON.stringify(items, null, 3));
+  // console.log(JSON.stringify(totalOBJ, null, 3));
+const {mutate, isPending} = usePlaceOrder()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TCheckoutSchema>({
+    resolver: yupResolver(CheckoutSchema) as Resolver<TCheckoutSchema>,
+  });
 
   const onSubmit = (data: TCheckoutSchema) => {
-    console.log(data);
+    // console.log(data);
+    if (!user) {
+      showMessage({ type: "danger", message: "you have to login first" })
+      return
+    }
+    
+    const Body = {
+      data,
+      items,
+      totalProductsPricesSum: totalOBJ?.totalBeforeTax,
+      createdAt: new Date(),
+      totalPrice: totalOBJ?.totalAfterTax,
+      userID: user?.uid
+    };
 
-      
+    mutate(Body)
   };
 
   return (
@@ -61,6 +82,7 @@ const {
               bgColor={appColors.black}
               buttonFn={handleSubmit(onSubmit)}
               buttonText="Confirm"
+              loading={isPending}
             />
           </View>
         </CustomFormWrapper>

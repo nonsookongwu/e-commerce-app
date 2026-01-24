@@ -1,45 +1,45 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import CustomSafeAreaView from "../../Components/CustomSafeAreaView";
-import { s, vs } from "react-native-size-matters";
-import { Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signinSchema, TSigninSchema } from "../../utils/validation";
-import CustomInput from "../../Components/CustomInput";
-import CustomFormWrapper from "../../Components/CustomFormWrapper";
-import { images } from "../../assets";
-import SubTitleText from "../../Components/CustomTexts/SubTitleText";
-import CustomButton from "../../Components/CustomButton";
-import { appColors } from "../../styles/colors";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { screenPaddingHorizontal } from "../../utils/constants";
-import SmallText from "../../Components/CustomTexts/SmallText";
 import { useNavigation } from "@react-navigation/native";
-import { AuthNavigationProp, MainStackNavigationProp } from "../../utils/typesAndInterfaces";
+import React from "react";
+import { Resolver, useForm } from "react-hook-form";
+import { Image, StyleSheet, View } from "react-native";
+import { s, vs } from "react-native-size-matters";
+import { images } from "../../assets";
+import CustomButton from "../../Components/CustomButton";
+import CustomFormWrapper from "../../Components/CustomFormWrapper";
+import CustomInput from "../../Components/CustomInput";
+import CustomSafeAreaView from "../../Components/CustomSafeAreaView";
+import SubTitleText from "../../Components/CustomTexts/SubTitleText";
+import useLogin from "../../hooks/useLogin";
+import { appColors } from "../../styles/colors";
+import { screenPaddingHorizontal } from "../../utils/constants";
+import { AuthNavigationProp } from "../../utils/typesAndInterfaces";
+import { signinSchema, TSigninSchema } from "../../utils/validation";
 
 const LoginScreen = () => {
   const navigation = useNavigation<AuthNavigationProp>();
-  const navigate = useNavigation<MainStackNavigationProp>();
+  
+  const {Login, isLoading} = useLogin()
   const {
     control,
-    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<TSigninSchema>({
     resolver: yupResolver(signinSchema) as Resolver<TSigninSchema>,
   });
 
-  const onSubmit = (data: TSigninSchema) => {
-    console.log(data);
+  const onSubmit = async(data: TSigninSchema) => {
+    // console.log(data);
 
-      navigate.navigate("homeTabs");
+    await Login(data)
+      // navigate.navigate("homeTabs");
   };
 
   return (
     <CustomSafeAreaView>
       <View style={styles.container}>
         <CustomFormWrapper>
-        <Image style={styles.image} source={images.appLogo} />
+          <Image style={styles.image} source={images.appLogo} />
           <CustomInput
             placeHolder="Email"
             keyboardType="email-address"
@@ -65,6 +65,7 @@ const LoginScreen = () => {
                 bgColor={appColors.black}
                 buttonText="Login"
                 buttonFn={handleSubmit(onSubmit)}
+                loading={isLoading}
               />
               {/* <CustomButton
               bgColor={appColors.white}

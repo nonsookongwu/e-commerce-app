@@ -14,9 +14,11 @@ import { appColors } from "../../styles/colors";
 import { screenPaddingHorizontal } from "../../utils/constants";
 import { AuthNavigationProp } from "../../utils/typesAndInterfaces";
 import { signUpSchema, TSignUpSchema } from "../../utils/validation";
+import { useSignup } from "../../hooks/useLogin";
 
 const SignUpScreen = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
+  const {Signup, isLoading} = useSignup()
   const {
     control,
     watch,
@@ -26,8 +28,10 @@ const SignUpScreen = () => {
     resolver: yupResolver(signUpSchema) as Resolver<TSignUpSchema>,
   });
 
-  const onSubmit = (data: TSignUpSchema) => {
-    console.log(data);
+  const onSubmit = async(data: TSignUpSchema) => {
+    // console.log(data);
+
+    await Signup(data)
 
       //   navigation.navigate("dashboard", { ...data });
       navigation.canGoBack()
@@ -79,6 +83,7 @@ const SignUpScreen = () => {
                 bgColor={appColors.black}
                 buttonText="Create new Account"
                 buttonFn={handleSubmit(onSubmit)}
+                loading={isLoading}
               />
               {/* <CustomButton
               bgColor={appColors.white}

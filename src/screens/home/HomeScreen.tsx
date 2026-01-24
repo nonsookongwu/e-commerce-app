@@ -1,20 +1,35 @@
-import React from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { Button, FlatList, StyleSheet, View } from 'react-native'
 import { vs } from 'react-native-size-matters'
 import CustomSafeAreaView from '../../Components/CustomSafeAreaView'
 import HomeHeader from '../../Components/Headers/HomeHeader'
 import ProductCard from '../../Components/ProductCard'
 import { screenPaddingHorizontal } from '../../utils/constants'
 import { products } from './data'
+import useGetProductsData from '../../hooks/useGetProductsData'
+// import useGetProductsData from '../../hooks/useGetProductsData'
 
 const HomeScreen = () => {
+
+  // const fetchData = async () => {
+  //   const data = await fetchProductsData();
+  //   // console.log(data)
+  // }
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
+  const { data: Products, refetch, isLoading } = useGetProductsData();
+  
+  // console.log(JSON.stringify(Products, null, 3));
+  
+
   return (
     <CustomSafeAreaView>
       <HomeHeader />
       {/* <SubTitleText fontFamily='SemiBold'>HomeScreen</SubTitleText> */}
       <View style={styles.screenContainer}>
         <FlatList
-          data={products}
+          data={Products}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <ProductCard product={item} />}
           showsVerticalScrollIndicator={false}
@@ -26,10 +41,13 @@ const HomeScreen = () => {
           contentContainerStyle={{
             paddingBottom: vs(60),
             gap: vs(10),
-            paddingTop: vs(10)
+            paddingTop: vs(10),
           }}
+          refreshing={isLoading}
+          onRefresh={refetch}
         />
       </View>
+      {/* <Button title="refetch" onPress={refetch} /> */}
     </CustomSafeAreaView>
   );
 }

@@ -1,24 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Entypo } from '@expo/vector-icons'
-import { vs, s } from 'react-native-size-matters'
-import CustomButton from '../../Components/CustomButton'
-import SubTitleText from '../../Components/CustomTexts/SubTitleText'
-import { appColors } from '../../styles/colors'
-import { useNavigation } from '@react-navigation/native'
-import { CartNavigationProp, Product } from '../../utils/typesAndInterfaces'
-import { formatAmount } from '../../utils/helperFunctions'
-import { ShippingFee, Tax } from '../../utils/constants'
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Entypo } from "@expo/vector-icons";
+import { vs, s } from "react-native-size-matters";
+import CustomButton from "../../Components/CustomButton";
+import SubTitleText from "../../Components/CustomTexts/SubTitleText";
+import { appColors } from "../../styles/colors";
+import { useNavigation } from "@react-navigation/native";
+import { CartNavigationProp, Product } from "../../utils/typesAndInterfaces";
+import { formatAmount } from "../../utils/helperFunctions";
+import { ShippingFee, Tax } from "../../utils/constants";
+import { useDispatch } from "react-redux";
+import { setTotalData } from "../../redux/reducers/TotalSlice";
 
-interface Props{
-  cartItems: Product[]
+interface Props {
+  cartItems: Product[];
 }
 
 const TotalView = ({ cartItems }: Props) => {
   // const [total, setTotal] = useState(0)
   // const [grandtotal, setGrandTotal] = useState(0)
-    const navigation = useNavigation<CartNavigationProp>();
-     
+  const navigation = useNavigation<CartNavigationProp>();
+  const dispatch = useDispatch();
+
   const total = cartItems
     ?.map((item) => item.price)
     .reduce((acc, val) => acc + val, 0);
@@ -36,7 +39,16 @@ const TotalView = ({ cartItems }: Props) => {
     { id: 3, label: "Shipping Fees", value: formatAmount(ShippingFee) },
   ];
 
-  
+  useEffect(() => {
+    if (total && grandTotal) {
+      const payload = {
+        totalBeforeTax: total,
+        totalAfterTax: grandTotal,
+      };
+      dispatch(setTotalData(payload));
+    }
+  }, [total, grandTotal]);
+
   return (
     <View style={styles.totalContainer}>
       <View style={styles.totalRowContainer}>
@@ -61,19 +73,19 @@ const TotalView = ({ cartItems }: Props) => {
       />
     </View>
   );
-}
+};
 
-export default TotalView
+export default TotalView;
 
 const styles = StyleSheet.create({
   totalContainer: {
     // height: vs(200),
     backgroundColor: appColors.white,
     paddingVertical: vs(10),
-        gap: vs(10),
-        borderTopWidth: 1,
-        borderTopColor: appColors.lightGray,
-    paddingHorizontal: s(12)
+    gap: vs(10),
+    borderTopWidth: 1,
+    borderTopColor: appColors.lightGray,
+    paddingHorizontal: s(12),
   },
   totalRowContainer: {
     gap: vs(10),

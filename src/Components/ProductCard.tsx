@@ -1,27 +1,30 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { s, vs } from 'react-native-size-matters'
-import SubTitleText from './CustomTexts/SubTitleText';
-import { formatAmount } from '../utils/helperFunctions';
-import SmallText from './CustomTexts/SmallText';
-import CartButton from './CartButton';
-import { commonStyles } from '../utils/constants';
-import { Product } from '../utils/typesAndInterfaces';
-import { useAppDispatch } from '../redux/store';
-import { addItemToCart } from '../redux/reducers/CardSlice';
-import { useDispatch } from 'react-redux';
-
-
+import { Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { s, vs } from "react-native-size-matters";
+import SubTitleText from "./CustomTexts/SubTitleText";
+import { formatAmount } from "../utils/helperFunctions";
+import SmallText from "./CustomTexts/SmallText";
+import CartButton from "./CartButton";
+import { commonStyles } from "../utils/constants";
+import { Product } from "../utils/typesAndInterfaces";
+import { useAppDispatch } from "../redux/store";
+import { addItemToCart } from "../redux/reducers/CardSlice";
+import { useDispatch } from "react-redux";
+import { showMessage } from "react-native-flash-message";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addItemToCart(product));
-  }
+    showMessage({
+      message: `${product.title} added to cart successfully`,
+      type: "info",
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -42,9 +45,9 @@ const ProductCard = ({ product }: Props) => {
       </View>
     </View>
   );
-}
+};
 
-export default ProductCard
+export default ProductCard;
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: s(10),
     paddingVertical: vs(7),
     paddingHorizontal: s(10),
-    ...commonStyles.shadow
+    ...commonStyles.shadow,
     // borderWidth: 1,
     //   borderColor: "red",
   },

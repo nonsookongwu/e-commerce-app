@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 
 
 export function capitalizeFirstLetter(str: string): string {
@@ -22,3 +23,7 @@ export const formatNumber = (value: number | string) => {
   const rawValue = value?.toString().replace(/\D/g, ""); // Remove non-numeric characters
   return new Intl.NumberFormat().format(Number(rawValue)) || "";
 };
+
+export const formatDate = (date: number) => {
+  return dayjs(date * 1000).format("DD MMM YYYY, hh:mm a");
+}
