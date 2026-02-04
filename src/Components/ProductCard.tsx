@@ -11,12 +11,14 @@ import { useAppDispatch } from "../redux/store";
 import { addItemToCart } from "../redux/reducers/CardSlice";
 import { useDispatch } from "react-redux";
 import { showMessage } from "react-native-flash-message";
+import useGetLanguage from "../hooks/useGetLanguage";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
+  const { countryCode, totals_currency } = useGetLanguage();
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addItemToCart(product));
@@ -40,7 +42,7 @@ const ProductCard = ({ product }: Props) => {
           {product.title}
         </SmallText>
         <SmallText lineHeight={14} fontFamily="Bold">
-          {formatAmount(product.price)}
+          {formatAmount(product.price, countryCode, totals_currency)}
         </SmallText>
       </View>
     </View>

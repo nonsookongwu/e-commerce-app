@@ -6,6 +6,7 @@ import { s, vs } from "react-native-size-matters";
 import SubTitleText from "../../Components/CustomTexts/SubTitleText";
 import SmallText from "../../Components/CustomTexts/SmallText";
 import { formatAmount, formatDate } from "../../utils/helperFunctions";
+import useGetLanguage from "../../hooks/useGetLanguage";
 
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const OrderCard = ({ totalPrice, price, date }: Props) => {
+  const { countryCode, totals_currency } = useGetLanguage();
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -23,10 +25,11 @@ const OrderCard = ({ totalPrice, price, date }: Props) => {
       <View style={styles.bottomContainer}>
         <View style={styles.bottomRow}>
           <SmallText fontFamily="Medium">
-            Total Price: {formatAmount(totalPrice)}
+            Total Price:{" "}
+            {formatAmount(totalPrice, countryCode, totals_currency)}
           </SmallText>
           <SmallText fontFamily="Medium" textColor="red">
-            {formatAmount(price)}
+            {formatAmount(price, countryCode, totals_currency)}
           </SmallText>
         </View>
         <View style={styles.bottomRow}>

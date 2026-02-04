@@ -11,6 +11,7 @@ import { formatAmount } from "../../utils/helperFunctions";
 import { ShippingFee, Tax } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 import { setTotalData } from "../../redux/reducers/TotalSlice";
+import useGetLanguage from "../../hooks/useGetLanguage";
 
 interface Props {
   cartItems: Product[];
@@ -19,6 +20,7 @@ interface Props {
 const TotalView = ({ cartItems }: Props) => {
   // const [total, setTotal] = useState(0)
   // const [grandtotal, setGrandTotal] = useState(0)
+  const { countryCode, totals_currency } = useGetLanguage();
   const navigation = useNavigation<CartNavigationProp>();
   const dispatch = useDispatch();
 
@@ -34,9 +36,21 @@ const TotalView = ({ cartItems }: Props) => {
   // }, [cartItems]);
 
   const paymentSummary = [
-    { id: 1, label: "Order Total", value: formatAmount(total) },
-    { id: 2, label: "Taxes & Fees", value: formatAmount(Tax) },
-    { id: 3, label: "Shipping Fees", value: formatAmount(ShippingFee) },
+    {
+      id: 1,
+      label: "Order Total",
+      value: formatAmount(total, countryCode, totals_currency),
+    },
+    {
+      id: 2,
+      label: "Taxes & Fees",
+      value: formatAmount(Tax, countryCode, totals_currency),
+    },
+    {
+      id: 3,
+      label: "Shipping Fees",
+      value: formatAmount(ShippingFee, countryCode, totals_currency),
+    },
   ];
 
   useEffect(() => {
@@ -63,7 +77,9 @@ const TotalView = ({ cartItems }: Props) => {
         <SubTitleText fontFamily="Bold">Order Total:</SubTitleText>
         <View style={styles.OrderTotalNumber}>
           <Entypo name="plus" size={17} color="black" />
-          <SubTitleText>{formatAmount(grandTotal)}</SubTitleText>
+          <SubTitleText>
+            {formatAmount(grandTotal, countryCode, totals_currency)}
+          </SubTitleText>
         </View>
       </View>
       <CustomButton

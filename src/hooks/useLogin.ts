@@ -1,19 +1,21 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../config/Firebase";
 import { TSigninSchema, TSignUpSchema } from "../utils/validation";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigationProp, MainStackNavigationProp } from "../utils/typesAndInterfaces";
-import { FirebaseErrorCodes } from "../utils/constants";
+import { FirebaseErrorCodes, USER_KEY } from "../utils/constants";
 import { FirebaseError } from "firebase/app";
 import { showMessage } from "react-native-flash-message";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/reducers/UserDataSlice";
+import useLocalStorage from "./useLocalStorage";
 
 const useLogin = () => {
   const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigation<MainStackNavigationProp>();
   const dispatch = useDispatch()
+  const {storeData} = useLocalStorage()
 
   const Login = async (query: TSigninSchema) => {
     try {
@@ -23,16 +25,20 @@ const useLogin = () => {
         query.email,
         query.password,
       );
-      // console.log(JSON.stringify(result, null, 3));
-      if (user.uid) {
-        dispatch(
-          setUserData({
+
+      
+      // console.log(JSON.stringify(user, null, 3));
+      const userOBJ = {
             uid: user.uid,
             displayName: user.displayName,
             email: user.email,
             emailVerified: user.emailVerified,
             photoURL: user.photoURL,
-          }),
+          }
+      if (user.uid) {
+        dispatch(
+          setUserData(userOBJ),
+          // await storeData({ key: USER_KEY, value: JSON.stringify(userOBJ) }),
         );
           navigate.navigate("homeTabs");
       }
@@ -69,7 +75,11 @@ export const useSignup = () => {
         query.email,
         query.password,
       );
-    //   console.log(JSON.stringify(result, null, 3));
+
+      await updateProfile(user, {
+        displayName: query.userName
+       });
+      // console.log(JSON.stringify(result, null, 3));
       if (user.uid) {
         navigate.navigate("login");
       }

@@ -28,3 +28,6 @@ export const FirebaseErrorCodes = {
   "auth/user-not-found": "User does not exist",
   "auth/weak-password": "Password is too weak"
 };
+
+export const USER_KEY = "userKey"
+export const LANG_KEY = "langugageKey"

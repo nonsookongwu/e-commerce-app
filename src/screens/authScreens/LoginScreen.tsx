@@ -15,9 +15,12 @@ import { appColors } from "../../styles/colors";
 import { screenPaddingHorizontal } from "../../utils/constants";
 import { AuthNavigationProp } from "../../utils/typesAndInterfaces";
 import { signinSchema, TSigninSchema } from "../../utils/validation";
+import { useAppSelector } from "../../redux/store";
+import useGetLanguage from "../../hooks/useGetLanguage";
 
 const LoginScreen = () => {
   const navigation = useNavigation<AuthNavigationProp>();
+  const language = useGetLanguage();
   
   const {Login, isLoading} = useLogin()
   const {
@@ -41,14 +44,14 @@ const LoginScreen = () => {
         <CustomFormWrapper>
           <Image style={styles.image} source={images.appLogo} />
           <CustomInput
-            placeHolder="Email"
+            placeHolder={language.sign_in_email_placeholder}
             keyboardType="email-address"
             inputError={errors.email}
             control={control}
             name="email"
           />
           <CustomInput
-            placeHolder="Password"
+            placeHolder={language.sign_in_password_placeholder}
             keyboardType="default"
             inputError={errors.password}
             control={control}
@@ -63,7 +66,7 @@ const LoginScreen = () => {
               </SubTitleText>
               <CustomButton
                 bgColor={appColors.black}
-                buttonText="Login"
+                buttonText={language.sign_in_login_button}
                 buttonFn={handleSubmit(onSubmit)}
                 loading={isLoading}
               />
@@ -75,13 +78,13 @@ const LoginScreen = () => {
             /> */}
             </View>
             <SubTitleText textColor="#575757" textAlign="center">
-              Create an account{" "}
+              {language.sign_up_create_account_button}{" "}
               <SubTitleText
                 textColor="#F83758"
                 textDecoration="underline"
                 handleOnPress={() => navigation.navigate("signup")}
               >
-                Sign Up
+                {language.sign_in_signup_button}
               </SubTitleText>
             </SubTitleText>
           </View>

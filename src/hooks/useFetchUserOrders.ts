@@ -14,7 +14,10 @@ import { Order, Product } from "../utils/typesAndInterfaces";
  const fetchUserOrders = async (): Promise<Order[] | undefined> => {
    try {
      const fireBaseUserID = auth.currentUser?.uid;
-     if (!fireBaseUserID) return;
+     
+     if (!fireBaseUserID) {
+       return []
+     };
 
      const orderRef = collection(doc(db, "users", fireBaseUserID), "orders");
 
@@ -24,6 +27,7 @@ import { Order, Product } from "../utils/typesAndInterfaces";
        id: doc.id,
        ...(doc.data() as Omit<Order, "id">),
      }));
+     
    } catch (error) {
      console.log(error);
      //  throw new Error(error);

@@ -8,10 +8,12 @@ import SmallText from '../../Components/CustomTexts/SmallText';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp, BottomTabNavigationProp } from '../../utils/typesAndInterfaces';
+import useGetLanguage from '../../hooks/useGetLanguage';
 
 const EmptyCartScreen = () => {
 
   const navigation = useNavigation<BottomTabNavigationProp>();
+  const language = useGetLanguage()
 
   const handleNavigate = () => {
     navigation.navigate("home")
@@ -23,14 +25,14 @@ const EmptyCartScreen = () => {
         <MaterialCommunityIcons
           name="shopping-outline"
           size={150}
-          color="black"
+          color={appColors.black}
         />
-        <SubTitleText fontFamily="Bold"> Your Cart is Empty</SubTitleText>
+        <SubTitleText fontFamily="Bold"> {language.empty_cart_title}</SubTitleText>
         <SmallText textAlign="center">
-          Browse our products and find something you like
+          {language.empty_cart_subtitle}
         </SmallText>
         <CustomButton
-          buttonText="Start Shopping"
+          buttonText={language.start_shopping}
           bgColor={appColors.black}
           buttonFn={handleNavigate}
         />

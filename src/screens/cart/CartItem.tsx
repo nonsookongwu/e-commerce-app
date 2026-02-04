@@ -9,12 +9,14 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { Product } from '../../utils/typesAndInterfaces'
 import { useDispatch } from 'react-redux'
 import { addItemCount, reduceItemCount, removeProductFromCart } from '../../redux/reducers/CardSlice'
+import useGetLanguage from '../../hooks/useGetLanguage'
 
 interface Props {
   product: Product;
 }
 
 const CartItem = ({ product }: Props) => {
+  const { countryCode, totals_currency } = useGetLanguage();
   const dispatch = useDispatch()
     // const [productCount, setProductCount] = useState(product.qty)
 
@@ -46,7 +48,7 @@ const CartItem = ({ product }: Props) => {
       <View style={styles.middleContainer}>
         <SmallText lineHeight={16}>{product.title}</SmallText>
         <SmallText fontFamily="SemiBold">
-          {formatAmount(product.price)}
+          {formatAmount(product.price, countryCode, totals_currency)}
         </SmallText>
         <View style={styles.middleInnerContainer}>
           <TouchableOpacity

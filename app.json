@@ -13,7 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nonsookongwu.EcommerceApp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,13 +25,24 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.nonsookongwu.EcommerceApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "expo": {
-      "assetBundlePatterns": ["**/*"]
+      "assetBundlePatterns": [
+        "**/*"
+      ]
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "db37ee85-6e7f-4c44-9c52-898ca12c322e"
+      }
     }
   }
 }

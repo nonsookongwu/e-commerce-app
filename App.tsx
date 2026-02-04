@@ -1,17 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, Button, StyleSheet, Text, View } from "react-native";
-import FlashMessage, { showMessage } from "react-native-flash-message";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import LoginScreen from "./src/screens/authScreens/LoginScreen";
-import SignUpScreen from "./src/screens/authScreens/SignUpScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import AuthStackNavigator from "./src/navigation/AuthStack";
-import MainStackNavigator from "./src/navigation/MainStack";
-import { useFonts } from "expo-font";
-import CheckoutScreen from "./src/screens/cart/CheckoutScreen";
-import { Provider } from "react-redux";
-import { store } from "./src/redux/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useFonts } from "expo-font";
+import React from "react";
+import { ActivityIndicator, StyleSheet } from "react-native";
+import FlashMessage from "react-native-flash-message";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import MainStackNavigator from "./src/navigation/MainStack";
+import { persistor, store } from "./src/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App() {
 const queryClient = new QueryClient()
@@ -28,16 +26,20 @@ const queryClient = new QueryClient()
   }
     return (
       <>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <FlashMessage />
-            <SafeAreaProvider>
-              <NavigationContainer>
-                <MainStackNavigator />
-              </NavigationContainer>
-            </SafeAreaProvider>
-          </Provider>
-        </QueryClientProvider>
+        <GestureHandlerRootView>
+          <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+              <PersistGate persistor={persistor}>
+                <FlashMessage />
+                <SafeAreaProvider>
+                  <NavigationContainer>
+                    <MainStackNavigator />
+                  </NavigationContainer>
+                </SafeAreaProvider>
+              </PersistGate>
+            </Provider>
+          </QueryClientProvider>
+        </GestureHandlerRootView>
       </>
     );
 }
