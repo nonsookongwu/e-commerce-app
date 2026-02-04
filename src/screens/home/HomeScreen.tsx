@@ -1,26 +1,19 @@
-import React, { useEffect } from 'react'
-import { Button, FlatList, StyleSheet, View } from 'react-native'
+import React from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { vs } from 'react-native-size-matters'
 import CustomSafeAreaView from '../../Components/CustomSafeAreaView'
 import HomeHeader from '../../Components/Headers/HomeHeader'
 import ProductCard from '../../Components/ProductCard'
-import { screenPaddingHorizontal } from '../../utils/constants'
-import { products } from './data'
 import useGetProductsData from '../../hooks/useGetProductsData'
+import { screenPaddingHorizontal } from '../../utils/constants'
 // import useGetProductsData from '../../hooks/useGetProductsData'
 
 const HomeScreen = () => {
 
-  // const fetchData = async () => {
-  //   const data = await fetchProductsData();
-  //   // console.log(data)
-  // }
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
   const { data: Products, refetch, isLoading } = useGetProductsData();
   
   // console.log(JSON.stringify(Products, null, 3));
+  
   
 
   return (

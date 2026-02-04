@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserData } from "../../utils/typesAndInterfaces";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { USER_KEY } from "../../utils/constants";
 
 interface FireBaseUser {
   user: UserData| null
@@ -18,7 +16,6 @@ const UserDataSlice = createSlice({
     //addItem to Cart
     setUserData: (state, action: PayloadAction<UserData | null>) => {
       state.user = action.payload;
-      AsyncStorage.setItem(USER_KEY, JSON.stringify(action.payload));
     },
   },
 });

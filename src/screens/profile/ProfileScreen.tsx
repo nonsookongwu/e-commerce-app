@@ -1,22 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { memo, useMemo, useRef } from "react";
-import CustomSafeAreaView from "../../Components/CustomSafeAreaView";
-import HomeHeader from "../../Components/Headers/HomeHeader";
-import { screenPaddingHorizontal, USER_KEY } from "../../utils/constants";
-import ProfileMenuButton from "./ProfileMenuButton";
-import { vs } from "react-native-size-matters";
-import TitleText from "../../Components/CustomTexts/TitleText";
-import SectionTitleText from "../../Components/CustomTexts/SectionTitleText";
-import { useNavigation } from "@react-navigation/native";
-import { MainStackNavigationProp, ProfileNavigationProp } from "../../utils/typesAndInterfaces";
-import LanguageBottomSheet from "../../Components/Language/LanguageBottomSheet";
+import { signOut } from "@firebase/auth";
 import BottomSheet from "@gorhom/bottom-sheet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import React, { useRef } from "react";
+import { StyleSheet, View } from "react-native";
+import { vs } from "react-native-size-matters";
+import CustomSafeAreaView from "../../Components/CustomSafeAreaView";
+import SectionTitleText from "../../Components/CustomTexts/SectionTitleText";
+import HomeHeader from "../../Components/Headers/HomeHeader";
+import LanguageBottomSheet from "../../Components/Language/LanguageBottomSheet";
+import { auth } from "../../config/Firebase";
 import useGetLanguage from "../../hooks/useGetLanguage";
 import { useAppSelector } from "../../redux/store";
+import { screenPaddingHorizontal } from "../../utils/constants";
 import { getGreeting } from "../../utils/helperFunctions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { auth } from "../../config/Firebase";
-import { signOut } from "@firebase/auth";
+import { MainStackNavigationProp, ProfileNavigationProp } from "../../utils/typesAndInterfaces";
+import ProfileMenuButton from "./ProfileMenuButton";
 
 const ProfileScreen = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
@@ -24,7 +23,7 @@ const ProfileScreen = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const language = useGetLanguage()
   const userData = useAppSelector((state) => state.userDataSlice.user)
-  console.log(userData);
+  // console.log(userData);
 
   // const greeting = useMemo(() => {
   //   return getGreeting()
@@ -39,7 +38,7 @@ const ProfileScreen = () => {
   const handleLogout = async() => {
     // navigation.navigate("myOrderScreen")
     try {
-      await AsyncStorage.removeItem(USER_KEY);
+      await AsyncStorage.clear();
       await signOut(auth)
       navigate.navigate("auth")
     } catch (error) {

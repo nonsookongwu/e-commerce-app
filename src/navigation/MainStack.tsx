@@ -1,13 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import AuthStackNavigator from "./AuthStack";
-import HomeTabs from "./HomeTabs";
-import OrderScreen from "../screens/profile/OrderScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { USER_KEY } from "../utils/constants";
+import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../config/Firebase";
+import OrderScreen from "../screens/profile/OrderScreen";
+import AuthStackNavigator from "./AuthStack";
+import HomeTabs from "./HomeTabs";
+import { logAllAsyncStorage } from "../utils/helperFunctions";
 
 
 export type MainStackParams = {
@@ -57,6 +56,9 @@ function MainStackNavigator() {
     });
   }, [])
   
+  // useEffect(() => {
+  //   logAllAsyncStorage();
+  // }, []);
 
 
   

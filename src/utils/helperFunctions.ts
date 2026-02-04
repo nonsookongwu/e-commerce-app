@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { store } from "../redux/store";
 import { LanguageData } from "./typesAndInterfaces";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const language = store.getState().languageSlice.value
 
@@ -47,4 +48,12 @@ export const getGreeting = ( language: LanguageData) => {
   }
 
   return language.good_night;
+};
+
+
+export const logAllAsyncStorage = async () => {
+  const keys = await AsyncStorage.getAllKeys();
+  const items = await AsyncStorage.multiGet(keys);
+
+  console.log("AsyncStorage contents:", JSON.stringify(items, null, 3));
 };

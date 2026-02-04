@@ -1,14 +1,14 @@
+import { useNavigation } from "@react-navigation/native";
+import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../config/Firebase";
-import { TSigninSchema, TSignUpSchema } from "../utils/validation";
-import { useNavigation } from "@react-navigation/native";
-import { AuthNavigationProp, MainStackNavigationProp } from "../utils/typesAndInterfaces";
-import { FirebaseErrorCodes, USER_KEY } from "../utils/constants";
-import { FirebaseError } from "firebase/app";
 import { showMessage } from "react-native-flash-message";
 import { useDispatch } from "react-redux";
+import { auth } from "../config/Firebase";
 import { setUserData } from "../redux/reducers/UserDataSlice";
+import { FirebaseErrorCodes } from "../utils/constants";
+import { AuthNavigationProp, MainStackNavigationProp } from "../utils/typesAndInterfaces";
+import { TSigninSchema, TSignUpSchema } from "../utils/validation";
 import useLocalStorage from "./useLocalStorage";
 
 const useLogin = () => {
@@ -38,7 +38,6 @@ const useLogin = () => {
       if (user.uid) {
         dispatch(
           setUserData(userOBJ),
-          // await storeData({ key: USER_KEY, value: JSON.stringify(userOBJ) }),
         );
           navigate.navigate("homeTabs");
       }
